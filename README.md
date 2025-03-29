@@ -68,15 +68,11 @@ Integrate the generated SDK with **React Query (TanStack Query)** for seamless d
 import { useQuery } from "@tanstack/react-query";
 import { client } from "./sdk";
 
-const usePets = () => {
-  return useQuery({
+const PetsList = () => {
+  const { data: pets, isLoading } = useQuery({
     queryKey: ["pets"],
     queryFn: () => client.pets.get(),
   });
-};
-
-const PetsList = () => {
-  const { data: pets, isLoading } = usePets();
 
   if (isLoading) return <p>Loading...</p>;
 

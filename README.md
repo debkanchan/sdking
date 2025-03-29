@@ -49,10 +49,10 @@ await client.pets.get();
 await client.pets.post({ name: "Buddy" });
 
 // Get a pet by ID
-await client.pets.get({ petId: 1 });
+await client.pets.$petId.get({ petId: 1 });
 
 // Delete a pet by ID
-await client.pets.del({ petId: 1 }); // Note: `del()` is used instead of `delete()`
+await client.pets.$petId.del({ petId: 1 }); // Note: `del()` is used instead of `delete()`
 
 // Pass custom headers
 await client.pets.get({ petId: 1 }, { Authorization: "Bearer token" });

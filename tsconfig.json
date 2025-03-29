@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "@tsconfig/node-lts/tsconfig.json",
+    "@tsconfig/strictest/tsconfig.json"
+  ],
+  "compilerOptions": {
+    "outDir": "dist",
+    "sourceMap": true,
+    "removeComments": true,
+    "exactOptionalPropertyTypes": false,
+    "noUncheckedIndexedAccess": false
+  },
+  "compileOnSave": true,
+  "include": ["src", "test"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+}

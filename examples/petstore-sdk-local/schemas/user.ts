@@ -8,7 +8,7 @@ export const UserSchema = z.object({
   email: z.string().optional(),
   password: z.string().optional(),
   phone: z.string().optional(),
-  userStatus: z.number().optional()
+  userStatus: z.number().optional(),
 });
 
 export type User = z.infer<typeof UserSchema>;

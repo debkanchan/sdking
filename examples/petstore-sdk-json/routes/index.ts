@@ -1,6 +1,6 @@
-import { aliases } from './alias.js';
-import { routes as petRoutes } from './pet/index.js';
-import { routes as userRoutes } from './user/index.js';
+import { aliases } from "./alias.js";
+import { routes as petRoutes } from "./pet/index.js";
+import { routes as userRoutes } from "./user/index.js";
 
 export const pet = petRoutes;
 export const user = userRoutes;
@@ -9,5 +9,5 @@ export const user = userRoutes;
 export const routes = {
   pet: petRoutes,
   user: userRoutes,
-  ...aliases
+  ...aliases,
 };

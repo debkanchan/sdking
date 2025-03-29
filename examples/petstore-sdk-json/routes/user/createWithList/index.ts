@@ -2,21 +2,23 @@ import { z } from "zod";
 import { User, UserSchema } from "../../../schemas/index.js";
 import { sdkConfig } from "../../../config.js";
 
-
 /**
  * Creates list of users with given input array.
  * Creates list of users with given input array.
  * OperationId: createUsersWithListInput
  */
-export async function post(body?: Array<User>, headers?: Record<string, string>): Promise<User> {
+export async function post(
+  body?: Array<User>,
+  headers?: Record<string, string>,
+): Promise<User> {
   // Construct the URL with path parameters
   let url = `${sdkConfig.baseUrl}/user/createWithList`;
 
   // Prepare fetch options
   const options: RequestInit = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...sdkConfig.headers,
       ...headers,
     },
@@ -37,6 +39,5 @@ export async function post(body?: Array<User>, headers?: Record<string, string>)
 }
 
 export const routes = {
-
   post,
 };

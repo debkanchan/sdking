@@ -1,16 +1,21 @@
-import { OpenAPISpec } from './types.js';
-import path from 'path';
-import { FileWriter } from '../utils/fs.js';
+import { OpenAPISpec } from "./types.js";
+import path from "path";
+import { FileWriter } from "../utils/fs.js";
 
 /**
  * Generates the SDK configuration file
  */
-export function generateConfigFile(spec: OpenAPISpec, outputDir: string, writeFile: FileWriter): void {
+export function generateConfigFile(
+  spec: OpenAPISpec,
+  outputDir: string,
+  writeFile: FileWriter,
+): void {
   // Determine default server URL from the spec
-  const defaultServer = spec.servers && spec.servers.length > 0 
-    ? spec.servers[0].url 
-    : 'http://localhost';
-  
+  const defaultServer =
+    spec.servers && spec.servers.length > 0
+      ? spec.servers[0].url
+      : "http://localhost";
+
   const configCode = `/**
  * SDK Configuration
  * Generated from ${spec.info.title} v${spec.info.version}
@@ -53,23 +58,27 @@ export const sdkConfig: SDKConfig = {
 `;
 
   // Write the configuration file
-  writeFile(path.join(outputDir, 'config.ts'), configCode);
+  writeFile(path.join(outputDir, "config.ts"), configCode);
 }
 
 /**
  * Generates the SDK index file
  */
-export function generateIndexFile(outputDir: string, importPrefix: ".js" | ".ts" | false, writeFile: FileWriter): void {
+export function generateIndexFile(
+  outputDir: string,
+  importPrefix: ".js" | ".ts" | false,
+  writeFile: FileWriter,
+): void {
   const indexCode = `/**
  * OpenAPI SDK
  * Generated with SDKing
  */
 
-export * from './config${importPrefix ?? ''}';
-export * from './schemas/index${importPrefix ?? ''}';
-export { routes as client } from './routes/index${importPrefix ?? ''}';
+export * from './config${importPrefix ?? ""}';
+export * from './schemas/index${importPrefix ?? ""}';
+export { routes as client } from './routes/index${importPrefix ?? ""}';
 `;
 
   // Write the index file
-  writeFile(path.join(outputDir, 'index.ts'), indexCode);
-} 
+  writeFile(path.join(outputDir, "index.ts"), indexCode);
+}

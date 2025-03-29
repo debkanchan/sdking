@@ -2,24 +2,32 @@ import { z } from "zod";
 import { ApiResponse, ApiResponseSchema } from "../../../../schemas/index.js";
 import { sdkConfig } from "../../../../config.js";
 
-
 /**
  * Uploads an image.
  * Upload image of the pet.
  * OperationId: uploadFile
  */
-export async function post(pathParams: {
-    petId: number
-  }, queryParams?: {
-    additionalMetadata?: string
-  }, body?: any, headers?: Record<string, string>): Promise<ApiResponse> {
+export async function post(
+  pathParams: {
+    petId: number;
+  },
+  queryParams?: {
+    additionalMetadata?: string;
+  },
+  body?: any,
+  headers?: Record<string, string>,
+): Promise<ApiResponse> {
   // Construct the URL with path parameters
   let url = `${sdkConfig.baseUrl}/pet/${pathParams.petId}/uploadImage`;
 
   // Add query parameters
   if (queryParams) {
     const searchParams = new URLSearchParams();
-    if (queryParams.additionalMetadata !== undefined) searchParams.append('additionalMetadata', String(queryParams.additionalMetadata));
+    if (queryParams.additionalMetadata !== undefined)
+      searchParams.append(
+        "additionalMetadata",
+        String(queryParams.additionalMetadata),
+      );
     const queryString = searchParams.toString();
     if (queryString) {
       url += `?${queryString}`;
@@ -28,9 +36,9 @@ export async function post(pathParams: {
 
   // Prepare fetch options
   const options: RequestInit = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...sdkConfig.headers,
       ...headers,
     },
@@ -51,6 +59,5 @@ export async function post(pathParams: {
 }
 
 export const routes = {
-
   post,
 };

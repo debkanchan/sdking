@@ -3,21 +3,21 @@
  * This file maps operationId values to their corresponding route functions
  */
 
-import * as pet from './pet/index.js';
-import * as pet_findByStatus from './pet/findByStatus/index.js';
-import * as pet_findByTags from './pet/findByTags/index.js';
-import * as pet_$petId from './pet/$petId/index.js';
-import * as pet_$petId_uploadImage from './pet/$petId/uploadImage/index.js';
-import * as store_inventory from './store/inventory/index.js';
-import * as store_order from './store/order/index.js';
-import * as store_order_$orderId from './store/order/$orderId/index.js';
-import * as user from './user/index.js';
-import * as user_createWithList from './user/createWithList/index.js';
-import * as user_login from './user/login/index.js';
-import * as user_logout from './user/logout/index.js';
-import * as user_$username from './user/$username/index.js';
+import * as pet from "./pet/index.js";
+import * as pet_findByStatus from "./pet/findByStatus/index.js";
+import * as pet_findByTags from "./pet/findByTags/index.js";
+import * as pet_$petId from "./pet/$petId/index.js";
+import * as pet_$petId_uploadImage from "./pet/$petId/uploadImage/index.js";
+import * as store_inventory from "./store/inventory/index.js";
+import * as store_order from "./store/order/index.js";
+import * as store_order_$orderId from "./store/order/$orderId/index.js";
+import * as user from "./user/index.js";
+import * as user_createWithList from "./user/createWithList/index.js";
+import * as user_login from "./user/login/index.js";
+import * as user_logout from "./user/logout/index.js";
+import * as user_$username from "./user/$username/index.js";
 
-export const aliases =  {
+export const aliases = {
   updatePet: pet.put,
   addPet: pet.post,
   findPetsByStatus: pet_findByStatus.get,
@@ -37,4 +37,4 @@ export const aliases =  {
   getUserByName: user_$username.get,
   updateUser: user_$username.put,
   deleteUser: user_$username.del,
-}
+};

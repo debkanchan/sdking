@@ -126,13 +126,13 @@ export const sdkConfig: SDKConfig = {
    * Default API server from OpenAPI spec: /api/v3
    * Change this to your API server URL
    */
-  baseUrl: '/api/v3',
-  
+  baseUrl: "/api/v3",
+
   /**
    * Default headers sent with each request
    */
   headers: {
-    'Accept': 'application/json',
+    Accept: "application/json",
   },
 };
 ```
@@ -174,4 +174,3 @@ sdk/
 ## 📜 License
 
 Released under the **MIT License** – free to use, modify, and distribute. 🎉
-

@@ -2,25 +2,28 @@ import { z } from "zod";
 import { User, UserSchema } from "../../schemas/index.js";
 import { sdkConfig } from "../../config.js";
 
-import { routes as createWithListRoutes } from './createWithList/index.js';
-import { routes as loginRoutes } from './login/index.js';
-import { routes as logoutRoutes } from './logout/index.js';
-import { routes as $usernameRoutes } from './$username/index.js';
+import { routes as createWithListRoutes } from "./createWithList/index.js";
+import { routes as loginRoutes } from "./login/index.js";
+import { routes as logoutRoutes } from "./logout/index.js";
+import { routes as $usernameRoutes } from "./$username/index.js";
 
 /**
  * Create user.
  * This can only be done by the logged in user.
  * OperationId: createUser
  */
-export async function post(body?: User, headers?: Record<string, string>): Promise<User> {
+export async function post(
+  body?: User,
+  headers?: Record<string, string>,
+): Promise<User> {
   // Construct the URL with path parameters
   let url = `${sdkConfig.baseUrl}/user`;
 
   // Prepare fetch options
   const options: RequestInit = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...sdkConfig.headers,
       ...headers,
     },

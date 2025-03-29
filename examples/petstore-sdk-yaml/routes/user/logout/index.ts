@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { sdkConfig } from "../../../config.js";
 
-
 /**
  * Logs out current logged in user session.
  * Log user out of the system.
@@ -13,9 +12,9 @@ export async function get(headers?: Record<string, string>): Promise<void> {
 
   // Prepare fetch options
   const options: RequestInit = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...sdkConfig.headers,
       ...headers,
     },
@@ -34,6 +33,5 @@ export async function get(headers?: Record<string, string>): Promise<void> {
 }
 
 export const routes = {
-
   get,
 };

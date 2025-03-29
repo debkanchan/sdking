@@ -2,24 +2,27 @@ import { z } from "zod";
 import { Pet, PetSchema } from "../../schemas/index.js";
 import { sdkConfig } from "../../config.js";
 
-import { routes as findByStatusRoutes } from './findByStatus/index.js';
-import { routes as findByTagsRoutes } from './findByTags/index.js';
-import { routes as $petIdRoutes } from './$petId/index.js';
+import { routes as findByStatusRoutes } from "./findByStatus/index.js";
+import { routes as findByTagsRoutes } from "./findByTags/index.js";
+import { routes as $petIdRoutes } from "./$petId/index.js";
 
 /**
  * Update an existing pet.
  * Update an existing pet by Id.
  * OperationId: updatePet
  */
-export async function put(body: Pet, headers?: Record<string, string>): Promise<Pet> {
+export async function put(
+  body: Pet,
+  headers?: Record<string, string>,
+): Promise<Pet> {
   // Construct the URL with path parameters
   let url = `${sdkConfig.baseUrl}/pet`;
 
   // Prepare fetch options
   const options: RequestInit = {
-    method: 'PUT',
+    method: "PUT",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...sdkConfig.headers,
       ...headers,
     },
@@ -44,15 +47,18 @@ export async function put(body: Pet, headers?: Record<string, string>): Promise<
  * Add a new pet to the store.
  * OperationId: addPet
  */
-export async function post(body: Pet, headers?: Record<string, string>): Promise<Pet> {
+export async function post(
+  body: Pet,
+  headers?: Record<string, string>,
+): Promise<Pet> {
   // Construct the URL with path parameters
   let url = `${sdkConfig.baseUrl}/pet`;
 
   // Prepare fetch options
   const options: RequestInit = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...sdkConfig.headers,
       ...headers,
     },

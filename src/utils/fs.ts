@@ -14,9 +14,12 @@ export function writeFile(filePath: string, content: string) {
   fs.writeFileSync(filePath, content);
 }
 
-export type DirMaker = (dirPath: string, options: {recursive?: boolean}) => void;
+export type DirMaker = (
+  dirPath: string,
+  options: { recursive?: boolean },
+) => void;
 
-export function mkDir(dirPath: string, options: {recursive?: boolean} = {}) {
+export function mkDir(dirPath: string, options: { recursive?: boolean } = {}) {
   if (!fs.existsSync(dirPath)) {
     fs.mkdirSync(dirPath, options);
   }

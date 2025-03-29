@@ -78,7 +78,15 @@ interface TracePathItem extends BasePathItem {
   trace: OperationObject;
 }
 
-export type PathItem = GetPathItem | PutPathItem | PostPathItem | DeletePathItem | OptionsPathItem | HeadPathItem | PatchPathItem | TracePathItem;
+export type PathItem =
+  | GetPathItem
+  | PutPathItem
+  | PostPathItem
+  | DeletePathItem
+  | OptionsPathItem
+  | HeadPathItem
+  | PatchPathItem
+  | TracePathItem;
 
 export interface OperationObject {
   tags?: string[];
@@ -93,7 +101,7 @@ export interface OperationObject {
 
 export interface ParameterObject {
   name: string;
-  in: 'query' | 'header' | 'path' | 'cookie';
+  in: "query" | "header" | "path" | "cookie";
   description?: string;
   required?: boolean;
   schema?: SchemaObject;
@@ -119,8 +127,26 @@ interface BaseSchema<T> {
 }
 
 interface StringSchema extends BaseSchema<String> {
-  type: 'string';
-  format?: 'date' | 'date-time' | 'time' | 'duration' | 'email' | 'idn-email' | 'hostname' | 'idn-hostname' | 'ipv4' | 'ipv6' | 'uri' | 'uri-reference' | 'iri' | 'iri-reference' | 'uuid' | 'json-pointer' | 'relative-json-pointer' | 'regex';
+  type: "string";
+  format?:
+    | "date"
+    | "date-time"
+    | "time"
+    | "duration"
+    | "email"
+    | "idn-email"
+    | "hostname"
+    | "idn-hostname"
+    | "ipv4"
+    | "ipv6"
+    | "uri"
+    | "uri-reference"
+    | "iri"
+    | "iri-reference"
+    | "uuid"
+    | "json-pointer"
+    | "relative-json-pointer"
+    | "regex";
   maxLength?: number;
   minLength?: number;
   pattern?: string;
@@ -129,7 +155,7 @@ interface StringSchema extends BaseSchema<String> {
 }
 
 interface NumberSchema extends BaseSchema<number> {
-  type: 'number';
+  type: "number";
   format?: string;
   minimum?: number;
   maximum?: number;
@@ -139,7 +165,7 @@ interface NumberSchema extends BaseSchema<number> {
 }
 
 interface IntegerSchema extends BaseSchema<number> {
-  type: 'integer';
+  type: "integer";
   format?: string;
   minimum?: number;
   maximum?: number;
@@ -149,7 +175,7 @@ interface IntegerSchema extends BaseSchema<number> {
 }
 
 interface BooleanSchema extends BaseSchema<boolean> {
-  type: 'boolean';
+  type: "boolean";
 }
 
 interface RefSchema {
@@ -157,27 +183,27 @@ interface RefSchema {
 }
 
 interface AnyOfSchema<T> extends BaseSchema<T> {
-  type: 'anyOf';
+  type: "anyOf";
   anyOf: T[];
 }
 
 interface OneOfSchema<T> extends BaseSchema<T> {
-  type: 'oneOf';
+  type: "oneOf";
   oneOf: T[];
 }
 
 interface AllOfSchema<T> extends BaseSchema<T> {
-  type: 'allOf';
+  type: "allOf";
   allOf: T[];
 }
 
 interface EnumSchema<T> extends BaseSchema<T> {
-  type: 'enum';
+  type: "enum";
   enum: T[];
 }
 
 interface ArraySchema<T> extends BaseSchema<T[]> {
-  type: 'array';
+  type: "array";
   items: T;
   maxItems?: number;
   minItems?: number;
@@ -187,7 +213,7 @@ interface ArraySchema<T> extends BaseSchema<T[]> {
 }
 
 interface ObjectSchema<T> extends BaseSchema<T> {
-  type: 'object';
+  type: "object";
   properties?: Record<string, T>;
   required?: string[];
   maxProperties?: number;
@@ -195,7 +221,18 @@ interface ObjectSchema<T> extends BaseSchema<T> {
   additionalProperties?: boolean | T;
 }
 
-export type SchemaObject = StringSchema | NumberSchema | IntegerSchema | BooleanSchema | RefSchema | ArraySchema<SchemaObject> |ObjectSchema<SchemaObject> | EnumSchema<SchemaObject> | AnyOfSchema<SchemaObject> | OneOfSchema<SchemaObject> | AllOfSchema<SchemaObject>;
+export type SchemaObject =
+  | StringSchema
+  | NumberSchema
+  | IntegerSchema
+  | BooleanSchema
+  | RefSchema
+  | ArraySchema<SchemaObject>
+  | ObjectSchema<SchemaObject>
+  | EnumSchema<SchemaObject>
+  | AnyOfSchema<SchemaObject>
+  | OneOfSchema<SchemaObject>
+  | AllOfSchema<SchemaObject>;
 
 // export interface SchemaObject  {
 //   type?: 'string' | 'number' | 'integer' | 'boolean' | 'object' | 'array';
@@ -235,4 +272,4 @@ export interface SchemaInfo {
 export interface GeneratedSDK {
   schemas: SchemaInfo[];
   routes: RouteInfo[];
-} 
+}

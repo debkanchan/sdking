@@ -1,24 +1,23 @@
 import { z } from "zod";
 import { sdkConfig } from "../../../config.js";
 
-
-const getResponseSchema = z.object({
-
-}).catchall(z.number());
+const getResponseSchema = z.object({}).catchall(z.number());
 /**
  * Returns pet inventories by status.
  * Returns a map of status codes to quantities.
  * OperationId: getInventory
  */
-export async function get(headers?: Record<string, string>): Promise<z.infer<typeof getResponseSchema>> {
+export async function get(
+  headers?: Record<string, string>,
+): Promise<z.infer<typeof getResponseSchema>> {
   // Construct the URL with path parameters
   let url = `${sdkConfig.baseUrl}/store/inventory`;
 
   // Prepare fetch options
   const options: RequestInit = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...sdkConfig.headers,
       ...headers,
     },
@@ -38,6 +37,5 @@ export async function get(headers?: Record<string, string>): Promise<z.infer<typ
 }
 
 export const routes = {
-
   get,
 };

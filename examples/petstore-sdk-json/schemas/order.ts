@@ -6,7 +6,7 @@ export const OrderSchema = z.object({
   quantity: z.number().optional(),
   shipDate: z.string().datetime().optional(),
   status: z.string().optional(),
-  complete: z.boolean().optional()
+  complete: z.boolean().optional(),
 });
 
 export type Order = z.infer<typeof OrderSchema>;

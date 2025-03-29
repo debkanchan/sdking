@@ -2,23 +2,25 @@ import { z } from "zod";
 import { Order, OrderSchema } from "../../../../schemas/index.js";
 import { sdkConfig } from "../../../../config.js";
 
-
 /**
  * Find purchase order by ID.
  * For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
  * OperationId: getOrderById
  */
-export async function get(pathParams: {
-    orderId: number
-  }, headers?: Record<string, string>): Promise<Order> {
+export async function get(
+  pathParams: {
+    orderId: number;
+  },
+  headers?: Record<string, string>,
+): Promise<Order> {
   // Construct the URL with path parameters
   let url = `${sdkConfig.baseUrl}/store/order/${pathParams.orderId}`;
 
   // Prepare fetch options
   const options: RequestInit = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...sdkConfig.headers,
       ...headers,
     },
@@ -42,17 +44,20 @@ export async function get(pathParams: {
  * For valid response try integer IDs with value < 1000. Anything above 1000 or non-integers will generate API errors.
  * OperationId: deleteOrder
  */
-export async function del(pathParams: {
-    orderId: number
-  }, headers?: Record<string, string>): Promise<void> {
+export async function del(
+  pathParams: {
+    orderId: number;
+  },
+  headers?: Record<string, string>,
+): Promise<void> {
   // Construct the URL with path parameters
   let url = `${sdkConfig.baseUrl}/store/order/${pathParams.orderId}`;
 
   // Prepare fetch options
   const options: RequestInit = {
-    method: 'DELETE',
+    method: "DELETE",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...sdkConfig.headers,
       ...headers,
     },
@@ -71,7 +76,6 @@ export async function del(pathParams: {
 }
 
 export const routes = {
-
   get,
   del,
 };

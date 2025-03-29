@@ -2,23 +2,26 @@ import { z } from "zod";
 import { Pet, PetSchema } from "../../../schemas/index.js";
 import { sdkConfig } from "../../../config.js";
 
-
 const getResponseSchema = z.array(PetSchema);
 /**
  * Finds Pets by tags.
  * Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
  * OperationId: findPetsByTags
  */
-export async function get(queryParams?: {
-    tags?: string[]
-  }, headers?: Record<string, string>): Promise<z.infer<typeof getResponseSchema>> {
+export async function get(
+  queryParams?: {
+    tags?: string[];
+  },
+  headers?: Record<string, string>,
+): Promise<z.infer<typeof getResponseSchema>> {
   // Construct the URL with path parameters
   let url = `${sdkConfig.baseUrl}/pet/findByTags`;
 
   // Add query parameters
   if (queryParams) {
     const searchParams = new URLSearchParams();
-    if (queryParams.tags !== undefined) searchParams.append('tags', String(queryParams.tags));
+    if (queryParams.tags !== undefined)
+      searchParams.append("tags", String(queryParams.tags));
     const queryString = searchParams.toString();
     if (queryString) {
       url += `?${queryString}`;
@@ -27,9 +30,9 @@ export async function get(queryParams?: {
 
   // Prepare fetch options
   const options: RequestInit = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...sdkConfig.headers,
       ...headers,
     },
@@ -49,6 +52,5 @@ export async function get(queryParams?: {
 }
 
 export const routes = {
-
   get,
 };

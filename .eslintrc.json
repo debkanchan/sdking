@@ -16,24 +16,14 @@
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module",
-    "project": [
-      "**/tsconfig.json"
-    ]
+    "project": ["**/tsconfig.json"]
   },
-  "plugins": [
-    "@typescript-eslint",
-    "prettier",
-    "jest"
-  ], // remove prettier if you want to disable prettier. useful for example when using vscode prettier or trunk.io
+  "plugins": ["@typescript-eslint", "prettier", "jest"], // remove prettier if you want to disable prettier. useful for example when using vscode prettier or trunk.io
   "rules": {
     "no-console": [
       "warn",
       {
-        "allow": [
-          "info",
-          "warn",
-          "error"
-        ]
+        "allow": ["info", "warn", "error"]
       }
     ],
     "@typescript-eslint/no-non-null-assertion": "off",

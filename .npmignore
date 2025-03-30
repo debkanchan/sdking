@@ -173,3 +173,7 @@ dist
 src/
 examples/
 .trunk/
+.github/
+.eslintrc.json
+tsconfig.json
+tsconfig.node.json

@@ -5,7 +5,7 @@ name: Node.js Package
 
 on:
   release:
-    types: [created, published]
+    types: [published]
 
 jobs:
   build:
@@ -17,7 +17,7 @@ jobs:
           node-version: 20
       - uses: pnpm/action-setup@v4
       - run: pnpm ci
-      # - run: npm test
+      # - run: pnpm test
 
   publish-npm:
     needs: build

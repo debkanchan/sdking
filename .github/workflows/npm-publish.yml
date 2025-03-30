@@ -19,6 +19,7 @@ jobs:
         with:
           version: 9
       - run: pnpm i --frozen-lockfile
+      - run: pnpm build
       # - run: pnpm test
 
   publish-npm:
@@ -34,6 +35,7 @@ jobs:
         with:
           version: 9
       - run: pnpm i --frozen-lockfile
+      - run: pnpm build
       - run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}

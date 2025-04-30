@@ -82,7 +82,7 @@ export function generateRouteFiles(
 
   // Generate a file for each route path
   for (const [routePath, pathRoutes] of routesByPath.entries()) {
-    const filePath = getRouteFilePath(routePath, routesDir);
+    const filePath = getRouteFilePath(routePath, routesDir, importPrefix);
 
     // Create directory if it doesn't exist
     const dirPath = path.dirname(filePath);
@@ -123,16 +123,21 @@ function groupRoutesByPath(routes: RouteInfo[]): Map<string, RouteInfo[]> {
  * Converts an OpenAPI path to a file path
  * Example: /pet => routes/pet/index.ts, /pet/{petId} => routes/pet/$petId/index.ts
  */
-function getRouteFilePath(routePath: string, routesDir: string): string {
+function getRouteFilePath(
+  routePath: string,
+  routesDir: string,
+  importPrefix: ".js" | ".ts" | false,
+): string {
   // Convert path parameters to file paths with $ prefix
   // Example: /pet/{petId} => /pet/$petId
   const filePath = routePath
-    .replace(/{([^}]+)}/g, "$$$1") // Replace {param} with $param
+    .replaceAll("{", "$")
+    .replaceAll("}", "") // Replace {param} with $param
     .split("/")
     .filter(Boolean) // Remove empty segments
     .join("/");
 
-  return path.join(routesDir, filePath, "index.ts");
+  return path.join(routesDir, filePath, `index${importPrefix ?? ""}`);
 }
 
 /**
@@ -190,10 +195,10 @@ function generateRoutesIndex(
 
   for (const routePath of topLevelRoutes) {
     const segment = routePath.split("/").filter(Boolean)[0];
-    const exportName =
-      segment.startsWith("{") && segment.endsWith("}")
-        ? "$" + segment.substring(1, segment.length - 1)
-        : segment;
+    const exportName = segment
+      .replaceAll("{", "$")
+      .replaceAll("}", "")
+      .replaceAll("-", "_");
 
     imports.push(
       `import { routes as ${exportName}Routes } from './${exportName}/index${importPrefix ?? ""}';`,
@@ -227,16 +232,11 @@ export { routes as client } from './routes${importPrefix ?? ""}';
  */
 function getRouteVariableName(routePath: string): string {
   return routePath
+    .replaceAll("{", "$")
+    .replaceAll("}", "") // Replace {param} with $param
+    .replaceAll("-", "_") // Replace - with _
     .split("/")
     .filter(Boolean)
-    .map((segment) => {
-      // Convert path parameters to variable names
-      const paramMatch = segment.match(/^\{(.+)\}$/);
-      if (paramMatch) {
-        return `$${paramMatch[1]}`;
-      }
-      return segment;
-    })
     .join("_")
     .replace(/[^a-zA-Z0-9_$]/g, "_");
 }
@@ -286,14 +286,12 @@ export function generateAliasFile(
   const importedPaths = new Set<string>();
 
   for (const { operationId, path, method } of operationIdMappings) {
-    const routePath = path.split("/").filter(Boolean).join("/");
+    const routePath = getRouteFilePath(path, "./", importPrefix);
 
     const routeVarName = getRouteVariableName(path);
 
     if (!importedPaths.has(routePath)) {
-      imports.push(
-        `import * as ${routeVarName} from './${routePath.replace("{", "$").replace("}", "")}/index${importPrefix ?? ""}';`,
-      );
+      imports.push(`import * as ${routeVarName} from './${routePath}';`);
       importedPaths.add(routePath);
     }
 

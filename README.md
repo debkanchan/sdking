@@ -145,7 +145,7 @@ export const sdkConfig: SDKConfig = {
 | `--input`         | `-i`  | Path or URL to the OpenAPI YAML spec (required)                                         |
 | `--output`        | `-o`  | Output directory for the generated SDK (required)                                       |
 | `--verbose`       | `-v`  | Enable verbose logging                                                                  |
-| `--import-prefix` | `-p`  | Import prefix for generated files (.js, .ts, or false for no prefix). Defaults to `.js` |
+| `--import-prefix` | `-p`  | Import prefix for generated files (.js, .ts, or false for no prefix). Defaults to `.ts` |
 | `--version`       |       | Show version number                                                                     |
 | `--help`          |       | Show help                                                                               |
 

@@ -26,8 +26,8 @@ program
   )
   .option(
     "-p, --import-prefix",
-    'Import prefix for generated files (.js, .ts, or false for no prefix). Defaults to ".js"',
-    ".js",
+    'Import prefix for generated files (.js, .ts, or false for no prefix). Defaults to ".ts"',
+    ".ts",
   )
   .option("-v, --verbose", "Enable verbose logging", false)
   .action(async (options) => {

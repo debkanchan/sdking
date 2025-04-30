@@ -118,26 +118,29 @@ export function findSchemaRefs(schema: SchemaObject): string[] {
       return;
     }
 
-    if (obj.type === "allOf" && obj.allOf) {
+    if ("allOf" in obj) {
       obj.allOf.forEach(traverse);
     }
 
-    if (obj.type === "oneOf" && obj.oneOf) {
+    if ("oneOf" in obj) {
       obj.oneOf.forEach(traverse);
     }
 
-    if (obj.type === "anyOf" && obj.anyOf) {
+    if ("anyOf" in obj) {
       obj.anyOf.forEach(traverse);
     }
 
-    if (obj.type == "array" && obj.items) {
+    if (obj.type === "array" && "items" in obj) {
       traverse(obj.items);
     }
 
-    if (obj.type == "object" && obj.properties) {
-      Object.values(obj.properties).forEach(traverse);
+    if (obj.type === "object" && "properties" in obj) {
+      if (obj.properties) {
+        Object.values(obj.properties).forEach((prop) => traverse(prop));
+      }
 
       if (
+        "additionalProperties" in obj &&
         obj.additionalProperties &&
         typeof obj.additionalProperties !== "boolean"
       ) {
@@ -160,6 +163,61 @@ export function generateZodSchema(schema: SchemaObject): {
   if ("$ref" in schema) {
     const refName = schema.$ref.replace("#/components/schemas/", "");
     return { schemaCode: `${refName}Schema`, references: [refName] };
+  }
+
+  if ("allOf" in schema) {
+    // Handle allOf (intersection)
+
+    const allOfZod = schema.allOf.map((s) => generateZodSchema(s));
+
+    const references = new Set<string>();
+    const intersectionSchemas: string[] = [];
+
+    allOfZod.forEach((item) => {
+      item.references.forEach((ref) => references.add(ref));
+      intersectionSchemas.push(item.schemaCode);
+    });
+
+    return {
+      schemaCode: `z.intersection([${intersectionSchemas.join(", ")}])${schema.nullable ? ".nullable()" : ""}`,
+      references: Array.from(references),
+    };
+  }
+
+  if ("oneOf" in schema) {
+    // Handle oneOf (union)
+    const oneOfZod = schema.oneOf.map((s) => generateZodSchema(s));
+
+    const references = new Set<string>();
+    const oneOfSchemas: string[] = [];
+
+    oneOfZod.forEach((item) => {
+      item.references.forEach((ref) => references.add(ref));
+      oneOfSchemas.push(item.schemaCode);
+    });
+
+    return {
+      schemaCode: `z.union([${oneOfSchemas.join(", ")}])${schema.nullable ? ".nullable()" : ""}`,
+      references: Array.from(references),
+    };
+  }
+
+  if ("anyOf" in schema) {
+    // Handle anyOf (union)
+    const anyOfZod = schema.anyOf.map((s) => generateZodSchema(s));
+
+    const references = new Set<string>();
+    const anyOfSchemas: string[] = [];
+
+    anyOfZod.forEach((item) => {
+      item.references.forEach((ref) => references.add(ref));
+      anyOfSchemas.push(item.schemaCode);
+    });
+
+    return {
+      schemaCode: `z.union([${anyOfZod.join(", ")}])${schema.nullable ? ".nullable()" : ""}`,
+      references: Array.from(references),
+    };
   }
 
   if (schema.type === "object") {
@@ -220,60 +278,6 @@ export function generateZodSchema(schema: SchemaObject): {
     };
   }
 
-  if (schema.type === "allOf") {
-    // Handle allOf (intersection)
-    const allOfZod = schema.allOf.map((s) => generateZodSchema(s));
-
-    const references = new Set<string>();
-    const intersectionSchemas: string[] = [];
-
-    allOfZod.forEach((item) => {
-      item.references.forEach((ref) => references.add(ref));
-      intersectionSchemas.push(item.schemaCode);
-    });
-
-    return {
-      schemaCode: `z.intersection([${intersectionSchemas.join(", ")}])${schema.nullable ? ".nullable()" : ""}`,
-      references: Array.from(references),
-    };
-  }
-
-  if (schema.type === "oneOf") {
-    // Handle oneOf (union)
-    const oneOfZod = schema.oneOf.map((s) => generateZodSchema(s));
-
-    const references = new Set<string>();
-    const oneOfSchemas: string[] = [];
-
-    oneOfZod.forEach((item) => {
-      item.references.forEach((ref) => references.add(ref));
-      oneOfSchemas.push(item.schemaCode);
-    });
-
-    return {
-      schemaCode: `z.union([${oneOfSchemas.join(", ")}])${schema.nullable ? ".nullable()" : ""}`,
-      references: Array.from(references),
-    };
-  }
-
-  if (schema.type === "anyOf") {
-    // Handle anyOf (union)
-    const anyOfZod = schema.anyOf.map((s) => generateZodSchema(s));
-
-    const references = new Set<string>();
-    const anyOfSchemas: string[] = [];
-
-    anyOfZod.forEach((item) => {
-      item.references.forEach((ref) => references.add(ref));
-      anyOfSchemas.push(item.schemaCode);
-    });
-
-    return {
-      schemaCode: `z.union([${anyOfZod.join(", ")}])${schema.nullable ? ".nullable()" : ""}`,
-      references: Array.from(references),
-    };
-  }
-
   // Handle primitive types
   switch (schema.type) {
     case "string":
@@ -305,7 +309,7 @@ export function generateZodSchema(schema: SchemaObject): {
         references: [],
       };
 
-    // default:
-    //   return {schemaCode: `z.any()${schema.nullable ? '.nullable()' : ''}`, references: []};
+    default:
+      return { schemaCode: `z.any()`, references: [] };
   }
 }

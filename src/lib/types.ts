@@ -183,17 +183,14 @@ interface RefSchema {
 }
 
 interface AnyOfSchema<T> extends BaseSchema<T> {
-  type: "anyOf";
   anyOf: T[];
 }
 
 interface OneOfSchema<T> extends BaseSchema<T> {
-  type: "oneOf";
   oneOf: T[];
 }
 
 interface AllOfSchema<T> extends BaseSchema<T> {
-  type: "allOf";
   allOf: T[];
 }
 

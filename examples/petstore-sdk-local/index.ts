@@ -1,6 +1,6 @@
 /**
  * OpenAPI SDK
- * Generated with openapi-sdk-generator
+ * Generated with SDKing
  */
 
 export * from "./config.js";

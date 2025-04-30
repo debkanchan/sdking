@@ -398,6 +398,11 @@ function generateRouteFile(
     }
   }
 
+  // Trim trailing slash
+  if (routePath.endsWith("/")) {
+    routePath = routePath.slice(0, -1);
+  }
+
   // Calculate the number of `../` to use for the relative import path
   const relativeImportDepthFromRoot = Array(routePath.split("/").length)
     .fill("..")
@@ -584,6 +589,18 @@ function getTypeForSchema(schema: SchemaObject): string {
   if (!schema) return "any";
 
   if ("$ref" in schema) return schema.$ref.replace("#/components/schemas/", "");
+
+  if ("allOf" in schema) {
+    return `z.intersection([${schema.allOf.map((s) => getTypeForSchema(s)).join(", ")}])`;
+  }
+
+  if ("oneOf" in schema) {
+    return `z.union([${schema.oneOf.map((s) => getTypeForSchema(s)).join(", ")}])`;
+  }
+
+  if ("anyOf" in schema) {
+    return `z.union([${schema.anyOf.map((s) => getTypeForSchema(s)).join(", ")}])`;
+  }
 
   switch (schema.type) {
     case "string":

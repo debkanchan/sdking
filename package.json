@@ -1,6 +1,7 @@
 {
   "name": "sdking",
   "version": "0.0.3",
+  "version": "0.0.4",
   "description": "SDKing - Generate TypeScript SDKs from OpenAPI specs. Validate API inputs and outputs using Zod. Own your SDKs!",
   "bin": "dist/cli/index.js",
   "scripts": {

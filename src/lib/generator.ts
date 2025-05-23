@@ -4,7 +4,7 @@ import { extractSchemas, generateSchemaFiles } from "./schema-generator.js";
 import {
   extractRoutes,
   generateRouteFiles,
-  generateAliasFile,
+  // generateAliasFile,
 } from "./route-generator.js";
 import { generateConfigFile, generateIndexFile } from "./config-generator.js";
 import fs from "fs";
@@ -45,8 +45,9 @@ export async function generateSDK(
   generateRouteFiles(routes, outputDir, importPrefix, writeFile, mkdir);
 
   // Step 7: Generate alias file for operationIds
-  if (verbose) console.info("Generating alias file for operationIds...");
-  generateAliasFile(routes, outputDir, importPrefix, writeFile);
+  // TODO: Uncomment this when alias file generation is fixed
+  // if (verbose) console.info("Generating alias file for operationIds...");
+  // generateAliasFile(routes, outputDir, importPrefix, writeFile);
 
   // Step 8: Generate config file
   if (verbose) console.info("Generating configuration file...");

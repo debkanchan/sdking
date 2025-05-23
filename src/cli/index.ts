@@ -25,9 +25,9 @@ program
     "Output directory for the generated SDK",
   )
   .option(
-    "-p, --import-prefix",
+    "-p, --import-prefix <prefix>",
     'Import prefix for generated files (.js, .ts, or false for no prefix). Defaults to ".ts"',
-    ".ts",
+    ".js",
   )
   .option("-v, --verbose", "Enable verbose logging", false)
   .action(async (options) => {
@@ -36,18 +36,22 @@ program
 
       console.info(`Generating SDK from ${input} to ${output}`);
 
-      if (importPrefix && ![".js", ".ts", false].includes(importPrefix)) {
+      if (importPrefix && ![".js", ".ts", "false"].includes(importPrefix)) {
         throw new Error(
           'Invalid import prefix. Must be ".js", ".ts", or false.',
         );
       }
+
+      // Convert string "false" to boolean false
+      const normalizedImportPrefix =
+        importPrefix === "false" ? false : importPrefix;
 
       await generateSDK(
         {
           inputPath: input,
           outputDir: output,
           verbose: !!verbose,
-          importPrefix: importPrefix as ".js" | ".ts" | false,
+          importPrefix: normalizedImportPrefix as ".js" | ".ts" | false,
         },
         writeFile,
         mkDir,

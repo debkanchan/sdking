@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { ApiResponse, ApiResponseSchema } from "../../../../schemas/index.js";
+import {
+  type ApiResponse,
+  ApiResponseSchema,
+} from "../../../../schemas/index.js";
 import { sdkConfig } from "../../../../config.js";
 
 /**

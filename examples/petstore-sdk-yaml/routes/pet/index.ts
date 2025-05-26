@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Pet, PetSchema } from "../../schemas/index.js";
+import { type Pet, PetSchema } from "../../schemas/index.js";
 import { sdkConfig } from "../../config.js";
 
 import { routes as findByStatusRoutes } from "./findByStatus/index.js";

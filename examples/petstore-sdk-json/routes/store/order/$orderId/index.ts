@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Order, OrderSchema } from "../../../../schemas/index.js";
+import { type Order, OrderSchema } from "../../../../schemas/index.js";
 import { sdkConfig } from "../../../../config.js";
 
 /**

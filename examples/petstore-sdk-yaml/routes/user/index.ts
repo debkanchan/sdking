@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { User, UserSchema } from "../../schemas/index.js";
+import { type User, UserSchema } from "../../schemas/index.js";
 import { sdkConfig } from "../../config.js";
 
 import { routes as createWithListRoutes } from "./createWithList/index.js";

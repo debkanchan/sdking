@@ -1,6 +1,6 @@
 {
   "name": "sdking",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "SDKing - Generate TypeScript SDKs from OpenAPI specs. Validate API inputs and outputs using Zod. Own your SDKs!",
   "bin": "dist/cli/index.js",
   "scripts": {
@@ -11,7 +11,9 @@
     "lint": "eslint src --ext .ts",
     "generate:petstore": "node dist/cli/index.js -i https://petstore3.swagger.io/api/v3/openapi.yaml -o ./examples/petstore-sdk-yaml",
     "generate:petstore:json": "node dist/cli/index.js -i https://petstore3.swagger.io/api/v3/openapi.json -o ./examples/petstore-sdk-json",
-    "generate:petstore:local": "node dist/cli/index.js -i ./examples/petstore-sdk-local/local.yaml -o ./examples/petstore-sdk-local"
+    "generate:petstore:local": "node dist/cli/index.js -i ./examples/petstore-sdk-local/local.yaml -o ./examples/petstore-sdk-local",
+    "generate:x": "node dist/cli/index.js -i ./examples/x/openapi.yaml -o ./examples/x-sdk",
+    "generate:y": "node dist/cli/index.js -i ./examples/y/openapi.json -o ./examples/y-sdk"
   },
   "keywords": [
     "openapi",

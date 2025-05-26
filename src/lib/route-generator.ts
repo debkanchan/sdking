@@ -645,7 +645,7 @@ function generateRouteFile(
   if (schemaImports.size > 0) {
     imports.push(
       `import { ${Array.from(schemaImports)
-        .map((s) => `${s}, ${s}Schema`)
+        .map((s) => `type ${s}, ${s}Schema`)
         .join(
           ", ",
         )} } from "${relativeImportDepthFromRoot}/schemas/index${importPrefix ?? ""}";`,
